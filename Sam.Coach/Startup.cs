@@ -1,4 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("Sam.Coach.Tests")]
 
 namespace Sam.Coach
 {

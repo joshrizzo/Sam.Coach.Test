@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+using System.Linq;
 using System.Threading.Tasks;
-[assembly: InternalsVisibleTo("Sam.Coach.Tests")]
 
 namespace Sam.Coach
 {
@@ -9,13 +8,41 @@ namespace Sam.Coach
     {
         public Task<IEnumerable<int>> Find(IEnumerable<int> numbers) => Task.Run(() =>
         {
-            IEnumerable<int> result = null;
+            var longestSeq = new List<int>();
+            var nums = numbers.ToList();
 
-            // TODO: return the longest raising sequence in the collection provided, i.e.
-            // when numbers = [4, 6, -3, 3, 7, 9] then expected result is [-3, 3, 7, 9]
-            // when numbers = [9, 6, 4, 5, 2, 0] then expected result is [4, 5]
+            for (int i = 0; i < nums.Count() - 1; i++)
+            {
+                List<int> thisSeq = GetSeqFrom(nums, i);
 
-            return result;
+                if (thisSeq.Count > longestSeq.Count)
+                {
+                    longestSeq = thisSeq;
+                }
+            }
+
+            return longestSeq.AsEnumerable();
         });
+
+        private List<int> GetSeqFrom(List<int> nums, int i)
+        {
+            var thisSeq = new List<int>() { nums[i] };
+            var thisNum = nums[i];
+            var nextNum = nums[i + 1];
+            var currentIndex = i;
+
+            while (nextNum > thisNum)
+            {
+                thisSeq.Add(nextNum);
+
+                if (currentIndex == nums.Count - 2) break;
+
+                currentIndex++;
+                thisNum = nums[currentIndex];
+                nextNum = nums[currentIndex + 1];
+            }
+
+            return thisSeq;
+        }
     }
 }
