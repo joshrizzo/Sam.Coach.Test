@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+[assembly: InternalsVisibleTo("Sam.Coach.Tests")]
 
 namespace Sam.Coach
 {
